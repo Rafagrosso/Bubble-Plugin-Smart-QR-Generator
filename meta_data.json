@@ -1,0 +1,17 @@
+{
+    "categories": {
+        "0": "containers",
+        "1": "productivity"
+    },
+    "data_tracked": false,
+    "demo_page": "https://qrcode-14255.bubbleapps.io/version-test",
+    "description": "📝 Descrição\n\nO Smart QR Generator é um plugin visual simples e poderoso que converte automaticamente qualquer link em um QR Code dinâmico, renderizado diretamente na sua página Bubble.\nIdeal para quem precisa criar etiquetas digitais, cartões de visita, links de pagamento, cupons promocionais ou páginas de acesso rápido — tudo isso com um visual limpo e personalizável.\n\nO plugin gera o QR Code dentro do elemento e expõe a imagem gerada em base64 para que possa ser armazenada, enviada por e-mail ou impressa facilmente.\n\n💡 Exemplos práticos de uso\n\nLink de pagamento: Gere um QR Code do seu link do Pix, PagSeguro ou MercadoPago.\n\nCartão de visita digital: Transforme o link do seu portfólio ou site em um QR Code para impressão.\n\nOrdem de serviço / nota fiscal: Exiba um QR Code com o número da OS ou um link de consulta.\n\nPromoções e campanhas: Gere um QR Code para redirecionar a landing page de uma oferta.\n\nControle interno: Gere QR Codes para rastrear produtos, clientes ou processos internos.\n\n\nEDITOR PAGE\nhttps://bubble.io/page?id=qrcode-14255&tab=Design&name=index&elements=bTHDl\n\nDEMO PAGE\nhttps://qrcode-14255.bubbleapps.io/version-test\n",
+    "designed_for": "web",
+    "image": "//meta-q.cdn.bubble.io/f1762632021629x154737098552681700/Captura%20de%20tela%202025-11-08%20165949.png",
+    "license": "open_source",
+    "link": "https://qrcode-14255.bubbleapps.io/version-test",
+    "name": "Smart QR Generator",
+    "platforms_new": "web",
+    "plugin_instructions": "🧠 Instruções de uso\n🔹 Passo 1 – Adicione o elemento na página\n\nNo editor do Bubble, vá em Visual Elements → Smart QR Generator e arraste o elemento para a página.\n\n🔹 Passo 2 – Configure o URL\n\nNo painel de propriedades, insira o URL que você quer transformar em QR Code.",
+    "sa_node_version": 22
+}

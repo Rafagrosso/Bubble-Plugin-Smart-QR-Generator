@@ -1,0 +1,75 @@
+{
+    "add_is_visible": true,
+    "can_fit_height": true,
+    "can_fit_width": true,
+    "category": "visual elements",
+    "default_dim": {
+        "height": 100,
+        "width": 100
+    },
+    "display": "Smart QR Generator",
+    "fields": {
+        "AAD": {
+            "caption": "url",
+            "doc": "URL que será transformada em QR Code",
+            "editor": "DynamicValue",
+            "name": "url",
+            "rank": 0,
+            "value": "text"
+        },
+        "AAG": {
+            "caption": "Cor do QrCode",
+            "default_val": "rgba(0,0,0,1)",
+            "doc": "Cor dos módulos escuros",
+            "editor": "Color",
+            "name": "dark_color",
+            "rank": 1
+        },
+        "AAH": {
+            "caption": "Cor do Fundo",
+            "default_val": "rgba(255,255,255,1)",
+            "doc": "Cor do fundo",
+            "editor": "Color",
+            "name": "light_color",
+            "rank": 2
+        },
+        "AAI": {
+            "caption": "Imagem Logo",
+            "doc": "Imagem central",
+            "editor": "DynamicValue",
+            "name": "logo",
+            "optional": true,
+            "rank": 3,
+            "value": "text"
+        },
+        "AAK": {
+            "caption": "logo_size",
+            "doc": "Tamanho relativo do logo. Ex.: 0 a 1",
+            "editor": "DynamicValue",
+            "name": "logo_size",
+            "optional": true,
+            "rank": 4,
+            "value": "number"
+        }
+    },
+    "icon": "ion-android-image",
+    "platform_type": "web",
+    "property_applications": {
+        "Background": true,
+        "Border": true,
+        "Font": false,
+        "MinWidth": true,
+        "Padding": true,
+        "resizable": true
+    },
+    "states": {
+        "AAL": {
+            "caption": "status",
+            "initialization_code": {
+                "fn": "function(properties, context) {\n\n\n\n}"
+            },
+            "name": "status",
+            "value": "text"
+        }
+    }
+}
