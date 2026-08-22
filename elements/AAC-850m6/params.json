@@ -44,12 +44,57 @@
         },
         "AAK": {
             "caption": "logo_size",
-            "doc": "Tamanho relativo do logo. Ex.: 0 a 1",
+            "doc": "Tamanho relativo do logo. Ex.: 0 a 1 (limitado internamente a 0.05–0.5 para manter o QR escaneável)",
             "editor": "DynamicValue",
             "name": "logo_size",
             "optional": true,
             "rank": 4,
             "value": "number"
+        },
+        "AAM": {
+            "caption": "Fundo do logo",
+            "default_val": true,
+            "doc": "Desenha um fundo branco arredondado atrás do logo para melhorar a leitura do QR Code",
+            "editor": "Checkbox",
+            "name": "logo_background",
+            "rank": 5
+        },
+        "AAN": {
+            "caption": "Fundo transparente",
+            "default_val": false,
+            "doc": "Gera o QR Code com fundo transparente (ignora a Cor do Fundo). Ideal para sobrepor em imagens ou materiais impressos",
+            "editor": "Checkbox",
+            "name": "transparent_bg",
+            "rank": 6
+        },
+        "AAO": {
+            "caption": "Margem (módulos)",
+            "doc": "Margem em módulos ao redor do QR Code. Padrão: 1",
+            "editor": "DynamicValue",
+            "name": "margin",
+            "optional": true,
+            "rank": 7,
+            "value": "number"
+        },
+        "AAP": {
+            "caption": "Correção de erro",
+            "default_val": "H",
+            "doc": "Nível de correção de erro: L (7%), M (15%), Q (25%), H (30%). Use H quando houver logo; L permite QR mais simples/denso",
+            "editor": "Dropdown",
+            "name": "error_correction",
+            "optional": true,
+            "options": "L,M,Q,H",
+            "rank": 8
+        }
+    },
+    "events": {
+        "AAR": {
+            "caption": "QR Code foi gerado",
+            "name": "generated"
+        },
+        "AAS": {
+            "caption": "Ocorreu um erro na geração",
+            "name": "generation_error"
         }
     },
     "icon": "ion-android-image",
@@ -69,6 +114,14 @@
                 "fn": "function(properties, context) {\n\n\n\n}"
             },
             "name": "status",
+            "value": "text"
+        },
+        "AAQ": {
+            "caption": "qr_base64",
+            "initialization_code": {
+                "fn": "function(properties, context) {\n\n\n\n}"
+            },
+            "name": "qr_base64",
             "value": "text"
         }
     }

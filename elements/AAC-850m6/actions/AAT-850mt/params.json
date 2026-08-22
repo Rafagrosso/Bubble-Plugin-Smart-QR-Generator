@@ -1,0 +1,14 @@
+{
+    "caption": "Baixar QR Code (PNG)",
+    "fields": {
+        "AAV": {
+            "caption": "Nome do arquivo",
+            "doc": "Nome do arquivo PNG baixado (sem extensão). Padrão: qrcode",
+            "editor": "DynamicValue",
+            "name": "filename",
+            "optional": true,
+            "rank": 0,
+            "value": "text"
+        }
+    }
+}
