@@ -50,27 +50,67 @@ interface cria melhor, por exemplo): sincronize **imediatamente depois**, ainda
 na mesma sessão, e antes de qualquer alteração nova aqui. Assim a mudança volta
 para o GitHub antes de virar divergência.
 
-## Se o conflito aparecer mesmo assim
+## Quem manda em quê
 
-O Bubble envia a versão dele para uma branch separada no GitHub e pede que você
-resolva por lá. Como o GitHub é a base, o padrão é **manter o que está na
-`main`** e descartar a divergência do Bubble:
+"GitHub é a base" vale para **o código e o conteúdo**: `update.js`, `run.js`,
+textos, opções, valores padrão. Não vale para **IDs e estrutura de pastas**.
+
+O Bubble mantém seu próprio contador de IDs. Quando ele importa uma entidade
+nova criada à mão aqui (um state, uma ação, um evento), ele **atribui o ID
+dele** e reescreve a pasta. Foi o que aconteceu no primeiro sync deste
+repositório: as ações criadas como `AAT-850n8` e `AAU-850na` voltaram do Bubble
+como `AAW-850ne` e `AAY-850nj`. O código dentro delas veio intacto, byte a byte
+— só a numeração mudou.
+
+Por isso, para **criar entidades novas** o caminho barato é o inverso: crie a
+casca no editor do Bubble (só o nome do state/ação/campo), sincronize para o
+GitHub, e então escreva o código aqui. O Bubble numera, você programa. Para
+**alterar o que já existe**, siga o fluxo normal acima — o GitHub manda.
+
+## Se o conflito aparecer
+
+O Bubble cria uma branch chamada `conflict_<data>` com a versão dele e pede
+para você resolver no GitHub. Como a versão do Bubble já traz o conteúdo do
+GitHub reimportado **com os IDs canônicos dele**, o normal é resolver a favor
+do Bubble e depois recuperar o que ele tiver descartado:
 
 ```bash
 git fetch origin
-git branch -r                      # descubra o nome da branch que o Bubble criou
+git branch -r                                    # ache a branch conflict_<data>
 git checkout main
-git merge -X ours origin/<branch-do-bubble>   # empate resolve a favor da main
-node tools/validate-plugin.js
-git push origin main
+git merge -X theirs origin/conflict_<data>       # IDs e estrutura do Bubble
 ```
 
-Depois disso, volte ao Bubble e clique em *Synchronize with GitHub* de novo.
+Em seguida, **três verificações que o merge não faz sozinho**:
 
-`-X ours` só decide os trechos **em conflito** a favor da `main`; alterações do
-Bubble que não colidem com nada continuam entrando. Se você quiser aproveitar
-algo específico que só existe do lado do Bubble, abra o diff antes
-(`git diff main origin/<branch-do-bubble>`) e traga na mão.
+1. **Apague suas pastas duplicadas.** As entidades que você criou à mão
+   continuam no repositório com os IDs antigos, ao lado das que o Bubble
+   renumerou. `node tools/validate-plugin.js` acusa o ID repetido; apague a
+   pasta com o ID antigo.
+2. **Restaure o que o Bubble perdeu no caminho.** Ao reimportar, ele costuma
+   descartar `doc`, `optional` e `default_val` de campos. Compare com
+   `git diff b651b98 main -- elements/` e reponha à mão.
+3. **Valide e envie.**
+
+   ```bash
+   node tools/validate-plugin.js
+   git push origin main
+   ```
+
+Depois disso, volte ao Bubble e clique em *Synchronize with GitHub* de novo:
+como a `main` agora descende da branch do Bubble, o merge é limpo.
+
+`-X theirs` só decide os trechos **em conflito** a favor do Bubble; o que só
+existe na `main` (este arquivo, `tools/`, `.github/`) atravessa o merge intacto.
+
+### Detalhes observados do lado do Bubble
+
+- Ele remove a quebra de linha final dos arquivos. Diferença cosmética, ignore.
+- O `<script>` de bibliotecas fica em **`html_headers.html` na raiz** (header
+  compartilhado do plugin), não em `elements/<id>/headers.html`.
+- Ele **não** importa alterações de `description` e `plugin_instructions` do
+  `meta_data.json` — esses campos são editados na aba de configurações do
+  plugin. Se o texto no Bubble estiver desatualizado, atualize por lá.
 
 ## Estrutura do repositório
 

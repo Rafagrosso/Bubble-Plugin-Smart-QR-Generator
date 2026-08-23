@@ -211,8 +211,17 @@ for (const elDir of elementDirs) {
   for (const js of ["initialize.js", "update.js", "preview.js", "reset.js"]) {
     checkJs(`${elRel}/${js}`);
   }
-  if (!fs.existsSync(path.join(ROOT, elRel, "headers.html"))) {
-    warn(`${elRel}/headers.html ausente — o elemento não carrega bibliotecas externas?`);
+  // O <script> das bibliotecas pode estar no header compartilhado do plugin
+  // (html_headers.html na raiz) ou no header do próprio elemento.
+  const hasSharedHeader = fs.existsSync(path.join(ROOT, "html_headers.html"));
+  const hasElementHeader = fs.existsSync(path.join(ROOT, elRel, "headers.html"));
+  if (!hasSharedHeader && !hasElementHeader) {
+    warn(`${elRel}: sem headers.html nem html_headers.html — o elemento não carrega bibliotecas externas?`);
+  }
+  if (hasSharedHeader && hasElementHeader) {
+    warn(
+      `html_headers.html e ${elRel}/headers.html coexistem — confira se alguma biblioteca não está sendo carregada duas vezes`
+    );
   }
 
   const el = readJson(`${elRel}/params.json`);

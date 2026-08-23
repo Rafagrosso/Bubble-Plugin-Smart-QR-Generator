@@ -67,6 +67,7 @@
         "AAP": {
             "caption": "Fundo do logo",
             "default_val": true,
+            "doc": "Desenha um fundo branco arredondado atrás do logo para melhorar a leitura do QR Code",
             "editor": "Checkbox",
             "name": "logo_background",
             "rank": 5
@@ -74,6 +75,7 @@
         "AAQ": {
             "caption": "Fundo transparente",
             "default_val": false,
+            "doc": "Gera o QR Code com fundo transparente (ignora a Cor do Fundo). Ideal para sobrepor em imagens ou materiais impressos",
             "editor": "Checkbox",
             "name": "transparent_bg",
             "rank": 6
@@ -81,7 +83,7 @@
         "AAR": {
             "caption": "Margem",
             "default_val": 1,
-            "doc": "",
+            "doc": "Margem em módulos ao redor do QR Code. Padrão: 1",
             "editor": "DynamicValue",
             "name": "margin",
             "optional": true,
@@ -90,9 +92,11 @@
         },
         "AAS": {
             "caption": "Correção de erro",
-            "doc": "\"Nível de correção de erro: L (7%), M (15%), Q (25%), H (30%). Use H quando houver logo; L permite QR mais simples/denso",
+            "default_val": "H",
+            "doc": "Nível de correção de erro: L (7%), M (15%), Q (25%), H (30%). Use H quando houver logo; L permite QR mais simples/denso",
             "editor": "Dropdown",
             "name": "error_correction",
+            "optional": true,
             "options": "L,M,Q,H",
             "rank": 8
         }

@@ -1,3 +1,4 @@
 {
-    "caption": "Copiar QR Code para a área de transferência"
+    "caption": "Copiar QR Code para a área de transferência",
+    "doc": "Copia a imagem do QR Code para a área de transferência do navegador. Requer um navegador com suporte a ClipboardItem."
 }
