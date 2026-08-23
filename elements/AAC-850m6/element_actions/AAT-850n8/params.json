@@ -1,5 +1,6 @@
 {
     "caption": "Baixar QR Code (PNG)",
+    "doc": "Baixa a imagem do QR Code atualmente exibida no elemento como um arquivo PNG.",
     "fields": {
         "AAV": {
             "caption": "Nome do arquivo",
