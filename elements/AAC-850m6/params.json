@@ -33,18 +33,10 @@
         "AAG": {
             "caption": "Cor do QrCode",
             "default_val": "rgba(0,0,0,1)",
-            "doc": "Cor dos módulos escuros",
+            "doc": "Cor dos módulos escuros. O fundo do QR Code vem do Background do elemento, no painel de estilo do Bubble.",
             "editor": "Color",
             "name": "dark_color",
             "rank": 1
-        },
-        "AAH": {
-            "caption": "Cor do Fundo",
-            "default_val": "rgba(255,255,255,1)",
-            "doc": "Cor do fundo",
-            "editor": "Color",
-            "name": "light_color",
-            "rank": 2
         },
         "AAI": {
             "caption": "Imagem Logo",
@@ -52,7 +44,7 @@
             "editor": "DynamicValue",
             "name": "logo",
             "optional": true,
-            "rank": 3,
+            "rank": 2,
             "value": "text"
         },
         "AAK": {
@@ -61,24 +53,16 @@
             "editor": "DynamicValue",
             "name": "logo_size",
             "optional": true,
-            "rank": 4,
+            "rank": 3,
             "value": "number"
         },
         "AAP": {
             "caption": "Fundo do logo",
             "default_val": true,
-            "doc": "Desenha um fundo branco arredondado atrás do logo para melhorar a leitura do QR Code",
+            "doc": "Desenha um fundo arredondado atrás do logo para melhorar a leitura do QR Code. Usa a cor de fundo do código, ou branco quando ela for transparente.",
             "editor": "Checkbox",
             "name": "logo_background",
-            "rank": 5
-        },
-        "AAQ": {
-            "caption": "Fundo transparente",
-            "default_val": false,
-            "doc": "Gera o QR Code com fundo transparente (ignora a Cor do Fundo). Ideal para sobrepor em imagens ou materiais impressos",
-            "editor": "Checkbox",
-            "name": "transparent_bg",
-            "rank": 6
+            "rank": 4
         },
         "AAR": {
             "caption": "Margem",
@@ -87,7 +71,7 @@
             "editor": "DynamicValue",
             "name": "margin",
             "optional": true,
-            "rank": 7,
+            "rank": 5,
             "value": "number"
         },
         "AAS": {
@@ -98,7 +82,7 @@
             "name": "error_correction",
             "optional": true,
             "options": "L,M,Q,H",
-            "rank": 8
+            "rank": 6
         }
     },
     "has_reset_fn": true,

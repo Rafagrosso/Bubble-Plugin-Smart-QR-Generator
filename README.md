@@ -6,9 +6,13 @@ exportação em PNG/base64.
 
 ## Recursos
 
-- Cores do código e do fundo configuráveis, com opção de **fundo transparente**
-- **Logo central** com fundo branco arredondado automático, para o código
-  continuar escaneável
+- Cor dos módulos configurável. O **fundo do QR Code é o Background do
+  elemento**, definido no painel de estilo do Bubble — sem background, o código
+  sai com fundo transparente
+- Qualquer sintaxe de cor CSS é aceita e convertida para HEX, que é o formato
+  exigido pela biblioteca de geração
+- **Logo central** com fundo arredondado automático, para o código continuar
+  escaneável
 - **Nível de correção de erro** (L/M/Q/H) e margem ajustáveis
 - Estado **`qr_base64`** com a imagem gerada, pronta para salvar no banco,
   enviar por e-mail ou imprimir
