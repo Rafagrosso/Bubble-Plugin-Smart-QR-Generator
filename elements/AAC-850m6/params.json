@@ -1,4 +1,5 @@
 {
+    "add_hover_pressed": true,
     "add_is_visible": true,
     "can_fit_height": true,
     "can_fit_width": true,
@@ -8,6 +9,18 @@
         "width": 100
     },
     "display": "Smart QR Generator",
+    "events": {
+        "AAU": {
+            "caption": "QR Code foi gerado",
+            "doc": "Sempre que a geração termina com sucesso — incluindo após o logo ser desenhado. Neste momento o estado qr_base64 já está preenchido",
+            "name": "generated"
+        },
+        "AAV": {
+            "caption": "Ocorreu um erro na geração",
+            "doc": "Quando a biblioteca falha ao gerar o QR (ex.: conteúdo grande demais para o nível de correção escolhido)",
+            "name": "generation_error"
+        }
+    },
     "fields": {
         "AAD": {
             "caption": "url",
@@ -51,58 +64,47 @@
             "rank": 4,
             "value": "number"
         },
-        "AAM": {
+        "AAP": {
             "caption": "Fundo do logo",
             "default_val": true,
-            "doc": "Desenha um fundo branco arredondado atrás do logo para melhorar a leitura do QR Code",
             "editor": "Checkbox",
             "name": "logo_background",
             "rank": 5
         },
-        "AAN": {
+        "AAQ": {
             "caption": "Fundo transparente",
             "default_val": false,
-            "doc": "Gera o QR Code com fundo transparente (ignora a Cor do Fundo). Ideal para sobrepor em imagens ou materiais impressos",
             "editor": "Checkbox",
             "name": "transparent_bg",
             "rank": 6
         },
-        "AAO": {
-            "caption": "Margem (módulos)",
-            "doc": "Margem em módulos ao redor do QR Code. Padrão: 1",
+        "AAR": {
+            "caption": "Margem",
+            "default_val": 1,
+            "doc": "",
             "editor": "DynamicValue",
             "name": "margin",
             "optional": true,
             "rank": 7,
             "value": "number"
         },
-        "AAP": {
+        "AAS": {
             "caption": "Correção de erro",
-            "default_val": "H",
-            "doc": "Nível de correção de erro: L (7%), M (15%), Q (25%), H (30%). Use H quando houver logo; L permite QR mais simples/denso",
+            "doc": "\"Nível de correção de erro: L (7%), M (15%), Q (25%), H (30%). Use H quando houver logo; L permite QR mais simples/denso",
             "editor": "Dropdown",
             "name": "error_correction",
-            "optional": true,
             "options": "L,M,Q,H",
             "rank": 8
         }
     },
-    "events": {
-        "AAR": {
-            "caption": "QR Code foi gerado",
-            "name": "generated"
-        },
-        "AAS": {
-            "caption": "Ocorreu um erro na geração",
-            "name": "generation_error"
-        }
-    },
+    "has_reset_fn": true,
     "icon": "ion-android-image",
     "platform_type": "web",
     "property_applications": {
         "Background": true,
         "Border": true,
-        "Font": false,
+        "BoxShadow": true,
+        "Font": true,
         "MinWidth": true,
         "Padding": true,
         "resizable": true
@@ -110,14 +112,16 @@
     "states": {
         "AAL": {
             "caption": "status",
+            "doc": "Estado atual da geração. Valores possíveis: aguardando_url (URL vazia), gerando (em processamento), concluido (pronto), erro (falha na geração)",
             "initialization_code": {
                 "fn": "function(properties, context) {\n\n\n\n}"
             },
             "name": "status",
             "value": "text"
         },
-        "AAQ": {
+        "AAT": {
             "caption": "qr_base64",
+            "doc": "A imagem final do QR Code (já com logo, se houver) como Data URL base64 PNG — ex.: data:image/png;base64,iVBORw0.... Vazio (\"\") quando não há URL ou em caso de erro. Use para salvar no banco, enviar por e-mail, imprimir etc.",
             "initialization_code": {
                 "fn": "function(properties, context) {\n\n\n\n}"
             },
