@@ -20,6 +20,20 @@ exportação em PNG/base64.
   de transferência"**
 - Eventos **"QR Code foi gerado"** e **"Ocorreu um erro na geração"**
 
+## Proteções de legibilidade
+
+Um QR Code ilegível é uma falha silenciosa: ele aparece bonito na tela e
+simplesmente não é lido. O plugin fecha as quatro portas mais comuns para isso:
+
+- O logo é limitado a 25% da largura do código. Acima disso ele cobre módulos
+  demais e o QR deixa de decodificar — limite medido decodificando os códigos
+  gerados, não estimado. Valores maiores são reduzidos, com aviso no console
+- A margem padrão é de 4 módulos, a zona de silêncio exigida pela
+  especificação do QR Code
+- Havendo logo, a correção de erro é elevada para H automaticamente
+- Contraste insuficiente entre a cor do código e o fundo gera um aviso no
+  console do navegador, com os valores envolvidos
+
 A referência completa de campos, estados, eventos e ações está no
 `params.json` de cada entidade e nas instruções em `meta_data.json`.
 
