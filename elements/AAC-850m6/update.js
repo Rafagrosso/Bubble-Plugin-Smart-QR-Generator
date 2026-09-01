@@ -56,18 +56,56 @@ function(instance, properties, context) {
     // transparente, e o QR sai com fundo transparente.
     const lightColor = toHex(instance.canvas.css("background-color"), "#ffffff00");
 
+    // Um leitor precisa distinguir os módulos do fundo. Sem contraste o código
+    // é gerado, aparece na tela e simplesmente não é lido — falha silenciosa
+    // que custa caro, então avisamos no console.
+    const luminancia = function(hex) {
+        const h = hex.replace("#", "");
+        const cheio = h.length <= 4 ? h.slice(0, 3).split("").map(function(c) { return c + c; }).join("") : h.slice(0, 6);
+        const canal = function(i) {
+            const c = parseInt(cheio.substr(i * 2, 2), 16) / 255;
+            return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        };
+        return 0.2126 * canal(0) + 0.7152 * canal(1) + 0.0722 * canal(2);
+    };
+    // Fundo transparente: o que o leitor enxerga é a superfície atrás, e a
+    // aposta mais provável é uma superfície clara (papel, página branca).
+    const fundoEfetivo = isTransparent(lightColor) ? "#ffffff" : lightColor;
+    const lum = [luminancia(darkColor), luminancia(fundoEfetivo)];
+    const contraste = (Math.max(lum[0], lum[1]) + 0.05) / (Math.min(lum[0], lum[1]) + 0.05);
+    if (contraste < 3) {
+        console.warn(
+            "Smart QR Generator: contraste de apenas " + contraste.toFixed(1) + ":1 entre a cor do código (" +
+            darkColor + ") e o fundo (" + fundoEfetivo + "). O QR Code provavelmente não será lido. " +
+            "Escureça a Cor do QrCode ou clareie o Background do elemento."
+        );
+    }
+
     const width = instance.canvas.width() || 200;
     const height = instance.canvas.height() || 200;
     const qrSize = Math.min(width, height);
 
+    // A especificação do QR Code exige uma zona de silêncio de 4 módulos ao
+    // redor do código. Menos que isso faz leitores falharem quando há
+    // conteúdo colado no código.
     const margin = (typeof properties.margin === "number" && properties.margin >= 0)
         ? properties.margin
-        : 1;
+        : 4;
+    if (margin < 4) {
+        console.warn("Smart QR Generator: margem de " + margin + " módulos é menor que a zona de silêncio de 4 exigida pelo padrão. Leitores podem falhar.");
+    }
 
+    const hasLogo = !!(properties.logo && properties.logo.trim() !== "");
     const validLevels = ["L", "M", "Q", "H"];
-    const errorCorrectionLevel = validLevels.indexOf(properties.error_correction) !== -1
+    let errorCorrectionLevel = validLevels.indexOf(properties.error_correction) !== -1
         ? properties.error_correction
         : "H";
+    // O logo apaga módulos do centro. Só o nível H reserva redundância
+    // suficiente para o código continuar legível.
+    if (hasLogo && errorCorrectionLevel !== "H") {
+        console.warn("Smart QR Generator: com logo, a correção de erro foi elevada de " + errorCorrectionLevel + " para H para o código continuar legível.");
+        errorCorrectionLevel = "H";
+    }
 
     const options = {
         width: qrSize,
@@ -109,9 +147,15 @@ function(instance, properties, context) {
             logo.src = properties.logo;
 
             logo.onload = function() {
-                // Limita o tamanho para o QR continuar escaneável
-                let logoSize = properties.logo_size ? properties.logo_size : 0.25;
-                logoSize = Math.min(Math.max(logoSize, 0.05), 0.5);
+                // Acima de 0,25 o logo cobre módulos demais e o código deixa
+                // de ser decodificável, mesmo no nível H — limite medido
+                // decodificando os códigos gerados.
+                const LOGO_MAX = 0.25;
+                const pedido = properties.logo_size ? properties.logo_size : LOGO_MAX;
+                const logoSize = Math.min(Math.max(pedido, 0.05), LOGO_MAX);
+                if (pedido > LOGO_MAX) {
+                    console.warn("Smart QR Generator: logo_size " + pedido + " tornaria o QR Code ilegível; reduzido para " + LOGO_MAX + ".");
+                }
 
                 const logoWidth = canvas.width * logoSize;
                 const logoHeight = canvas.height * logoSize;
